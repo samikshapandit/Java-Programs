@@ -1,0 +1,61 @@
+package test;
+import java.util.Scanner;
+
+class stack{
+    int arr[]=new int[5];
+    int i=-1;
+    public void display(){
+        for(int j=i;j>=0;j--){
+            System.out.println(" "+arr[j]);
+        }
+    }
+    public void push(int d){
+        try{
+           this.i+=1;
+           this.arr[this.i]=d;
+            System.out.println("Item pushed");
+        }
+        catch(ArrayIndexOutOfBoundsException e){
+            System.out.println("OVERFLOW");
+        }
+    }
+
+    public void pop(){
+        try{
+            System.out.println(" "+arr[this.i]);
+            int poppeditem=this.arr[this.i];
+            this.i=this.i-1;
+            System.out.println("Popped Item is: "+poppeditem);
+        }
+        catch(ArrayIndexOutOfBoundsException e){
+            System.out.println("UNDERFLOW");
+        }
+    }
+}
+
+public class test1 {
+    public static void main(String[] args) {
+        Scanner sc= new Scanner(System.in);
+        stack st=new stack();
+        int ch;
+        int flag=1;
+        while(flag==1){
+            System.out.println("1.Push 2.Pop 3.Display");
+            ch =sc.nextInt();
+            switch (ch){
+                case 1:
+                    System.out.println("Enter data");
+                    int d= sc.nextInt();
+                    st.push(d);
+                    break;
+                case 2:
+                    st.pop();
+                    break;
+                case 3:
+                    st.display();
+                    break;
+                default:flag=0; break;
+            }
+        }
+    }
+}
