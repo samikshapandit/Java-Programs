@@ -1,0 +1,425 @@
+package Games;
+import java.util.Scanner;
+
+import java.util.Random;
+
+
+class gameOfNumbers<comp_inp> {
+    int us_inp;
+    int  comp_inp;
+    int count =0;
+
+    public int gameOfNumbers(){
+        Random random = new Random();
+        comp_inp = random.nextInt(0,100);
+        return comp_inp;
+    }
+
+    public void getUserInput(){
+
+        Scanner inp = new Scanner(System.in);
+        do {
+            System.out.println("Enter your guess : ");
+            us_inp = inp.nextInt();
+
+            if (us_inp > comp_inp)
+            {
+                System.out.println("Think for a smaller number !!!");
+            }
+            else if (us_inp < comp_inp)
+            {
+                System.out.println("Think for a bigger number !!!");
+            }
+            count ++;
+        }while(us_inp!=comp_inp);
+    }
+
+    public void isCorrect(){
+        System.out.println("Congratulations !\n Correct Guess !!");
+    }
+
+    public void noOfGuesses(){
+        System.out.println("The number of guesses is : " + count);
+        if(count <= 3){
+            System.out.println("You are a PRO Player");
+        }
+        else if(count >=4 && count <=7){
+            System.out.println("You are doing great !\n Keep it up!!");
+        }
+        else{
+            System.out.println("Keep Trying !!!!");
+        }
+    }
+}
+
+class guessTheNumberGame {
+    void guessthnumber () {
+        gameOfNumbers play = new gameOfNumbers();
+
+        play.gameOfNumbers();
+        play.getUserInput();
+        play.isCorrect();
+        play.noOfGuesses();
+    }
+
+}
+
+// rock paper scissor
+class Game {
+    void rockpaper()
+    {
+        System.out.println("---Welcome to Rock-Paper-Scissor Tournament---");
+        Scanner sc = new Scanner(System.in);
+        System.out.println("It's your turn to choose");
+        System.out.println("0:Rock\n1:Paper\n2:Scissor\n");
+        System.out.println("Enter your choice : ");
+        int uchoice = sc.nextInt();
+
+        Random random = new Random();
+        int compinp = random.nextInt(3);
+
+        if(compinp == 0){
+            System.out.println("Computer choice : Rock");
+        }
+        if(compinp == 1){
+            System.out.println("Computer choice : Paper");
+        }
+        if(compinp == 2){
+            System.out.println("Computer choice : Scissor");
+        }
+
+        if(uchoice == compinp){
+            System.out.println("It's a tie !!!");
+        }
+        else if(uchoice == 0 && compinp == 2 || uchoice == 1 && compinp == 0 || uchoice == 2 && compinp == 1)
+        {
+            System.out.println("You Win !!!");
+        }
+        else {
+            System.out.println("Computer Win !");
+        }
+
+    }
+}
+
+// hangman
+class Hangman {
+    private static final String[] WORDS = { "apple", "banana", "change","dog","enough","fish", "grape", "watermelon" };
+    private String word;
+    private char[] guessedLetters;
+    private int attemptsLeft;
+
+    public Hangman() {
+        word = getRandomWord();  // Select a random word from the predefined list
+        guessedLetters = new char[word.length()];  // Create an array to store guessed letters
+        attemptsLeft = 10;  // Set the maximum number of attempts
+    }
+
+    private String getRandomWord() {
+        int index = (int) (Math.random() * WORDS.length);  // Generate a random index
+        return WORDS[index];  // Return the word at the selected index
+    }
+
+    public void play() {
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Welcome to Hangman!");
+
+        while (true) {
+            System.out.println("Guess the word:");
+            printGuessedWord();  // Print the word with guessed letters
+
+            System.out.println("Attempts left: " + attemptsLeft);
+            System.out.print("Enter a letter: ");
+            char guess = scanner.next().charAt(0);  // Read the player's guess
+
+            if (!makeGuess(guess)) {  // Check if the guess is incorrect
+                attemptsLeft--;  // Decrease the number of attempts left
+                if (attemptsLeft == 0) {
+                    System.out.println("You lost! The word was: " + word);
+                    break;  // Exit the loop if there are no attempts left
+                }
+            }
+
+            if (isWordGuessed()) {  // Check if the word has been fully guessed
+                System.out.println("Congratulations! You won!");
+                break;  // Exit the loop if the word has been guessed
+            }
+        }
+
+        scanner.close();
+        System.out.println("Game over.");
+    }
+
+    private boolean makeGuess(char letter) {
+        boolean isCorrect = false;
+        for (int i = 0; i < word.length(); i++) {
+            if (word.charAt(i) == letter) {  // Check if the guessed letter is present in the word
+                guessedLetters[i] = letter;  // Store the correctly guessed letter
+                isCorrect = true;
+            }
+        }
+        return isCorrect;  // Return whether the guess was correct or not
+    }
+
+    private void printGuessedWord() {
+        for (int i = 0; i < word.length(); i++) {
+            if (guessedLetters[i] != '\0') {  // Check if the letter has been guessed
+                System.out.print(guessedLetters[i] + " ");
+            } else {
+                System.out.print("_ ");  // Print an underscore for letters that have not been guessed
+            }
+        }
+        System.out.println();
+    }
+
+    private boolean isWordGuessed() {
+        for (char letter : guessedLetters) {
+            if (letter == '\0') {  // Check if there are any remaining blank spaces
+                return false;  // Return false if any blank space is found
+            }
+        }
+        return true;  // Return true if all letters have been guessed
+    }
+
+    void  hangman() {
+        Hangman game = new Hangman();
+        game.play();
+    }
+}
+
+
+
+/// tic tac toe
+
+class TicTacToe {
+    private char[][] board;
+    private char currentPlayer;
+
+    public TicTacToe() {
+        board = new char[3][3];
+        currentPlayer = 'X';
+        initializeBoard();
+    }
+
+    public void initializeBoard() {
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 3; col++) {
+                board[row][col] = '-';
+            }
+        }
+    }
+
+    public void printBoard() {
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 3; col++) {
+                System.out.print(board[row][col] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    public boolean isBoardFull() {
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 3; col++) {
+                if (board[row][col] == '-') {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public boolean checkForWin() {
+        // Check rows
+        for (int row = 0; row < 3; row++) {
+            if (board[row][0] != '-' && board[row][0] == board[row][1] && board[row][0] == board[row][2]) {
+                return true;
+            }
+        }
+
+        // Check columns
+        for (int col = 0; col < 3; col++) {
+            if (board[0][col] != '-' && board[0][col] == board[1][col] && board[0][col] == board[2][col]) {
+                return true;
+            }
+        }
+
+        // Check diagonals
+        if (board[0][0] != '-' && board[0][0] == board[1][1] && board[0][0] == board[2][2]) {
+            return true;
+        }
+        if (board[0][2] != '-' && board[0][2] == board[1][1] && board[0][2] == board[2][0]) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public void changePlayer() {
+        currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+    }
+
+    public boolean makeMove(int row, int col) {
+        if (row >= 0 && row < 3 && col >= 0 && col < 3 && board[row][col] == '-') {
+            board[row][col] = currentPlayer;
+            return true;
+        }
+        return false;
+    }
+
+    void  tictactoe() {
+        TicTacToe game = new TicTacToe();
+        Scanner scanner = new Scanner(System.in);
+
+        while (!game.isBoardFull() && !game.checkForWin()) {
+            System.out.println("Current board:");
+            game.printBoard();
+            System.out.println("Player " + game.currentPlayer + ", enter your move (row and column):");
+            int row = scanner.nextInt();
+            int col = scanner.nextInt();
+
+            if (game.makeMove(row, col)) {
+                game.changePlayer();
+            } else {
+                System.out.println("Invalid move! Try again.");
+            }
+        }
+
+        System.out.println("Final board:");
+        game.printBoard();
+
+        if (game.checkForWin()) {
+            System.out.println("Player " + game.currentPlayer + " wins!");
+        } else {
+            System.out.println("It's a draw!");
+        }
+
+        scanner.close();
+    }
+}
+
+
+// basketball
+class Player {
+    private String name;
+
+    Player(String name) {
+        this.name = name;
+    }
+
+    String getName() {
+        return name;
+    }
+
+    int shoot() {
+        // Implement the logic for shooting here.
+        // For example, you can generate a random number to represent the score of the shot.
+        return (int) (Math.random() * 3); // Assuming scores can be 0, 1, or 2 for demonstration purposes.
+    }
+}
+
+class Games {
+    private Player player;
+    private int timeLimit;
+    private int score;
+    Games( ) {
+        this.player = null;
+        this.timeLimit =0;
+        this.score = 0;
+    }
+
+
+    Games(Player player, int timeLimit) {
+        this.player = player;
+        this.timeLimit = timeLimit;
+        this.score = 0;
+    }
+
+    void play() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Welcome to the basketball game, " + player.getName() + "!");
+        System.out.println("You have " + timeLimit + " seconds to score as many points as possible.");
+        long startTime = System.currentTimeMillis();
+        long endTime = startTime + (timeLimit * 1000L);
+
+        while (System.currentTimeMillis() < endTime) {
+            System.out.println("Enter 'shoot' to take a shot:");
+            String action = scanner.nextLine();
+            if (action.equals("shoot")) {
+                int shot = player.shoot();
+                System.out.println("You took a shot and scored " + shot + " points!");
+                score += shot;
+            } else {
+                System.out.println("Invalid action. Try again.");
+            }
+        }
+
+        System.out.println("Time's up!");
+        System.out.println("Your final score is " + score + " points.");
+    }
+
+    void basketball() {
+        Player player = new Player("John");
+        Games game = new Games(player, 60);
+        game.play();
+    }
+}
+
+public class gamesInJava {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in) ;
+        int choice ;
+        System.out.println("\t \t \t              =======================================      ") ;
+
+        System.out.println("\n\t\t\t\t           WELCOME TO JAVA GAME ZONE\n");
+        System.out.println("\t \t \t              =======================================    \n  ") ;
+        do {
+            ;
+            System.out.println("==================================================================================================================================\n");
+            System.out.println();
+            System.out.println("\t \t \t \t          Choices availabele are ") ;
+            System.out.println();
+            System.out.println("\t \t \t \t           1.Guess the number") ;
+            System.out.println("\t \t \t \t           2:Rock Paper Scissor") ;
+            System.out.println("\t \t \t \t           3:Hangman") ;
+            System.out.println("\t \t \t \t           4:Tic Tac Toe") ;
+            System.out.println("\t \t \t \t           5:Basketball") ;
+            System.out.println();
+            System.out.println();
+            System.out.println("==================================================================================================================================\n");
+
+
+            System.out.println(" \t \t \t \t          What do you want to play ") ;
+            choice=sc.nextInt() ;
+            switch(choice)
+            {
+
+                case 1 :
+                    guessTheNumberGame g1 =new guessTheNumberGame() ;
+                    g1.guessthnumber () ;
+                    break ;
+
+                case 2:
+                    Game g2= new Game() ;
+                    g2.rockpaper();
+                    break ;
+                case 3:
+                    Hangman g3= new Hangman() ;
+                    g3.hangman();
+                    break ;
+                case 4:
+                    TicTacToe g4 =new TicTacToe() ;
+                    g4.tictactoe();
+                    break ;
+                case 5 :
+                    Games g5=new Games() ;
+                    g5.basketball();
+                    break ;
+
+            }
+
+        }while(choice!=6) ;
+
+    }
+}
